@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]  # Or your default branch
+  workflow_dispatch:    # Allows manual triggers
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Matches the Linux environment in your log
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones can sometimes cause lockfile issues
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'  # Use the version from your local .nvmrc or package.json "engines" if specified
+        cache: 'npm'        # Caches node_modules for faster runs
+
+    - name: Install dependencies
+      run: npm ci  # Now safe after lockfile sync
+
+    - name: Build
+      run: npm run build  # Assumes this creates a 'dist' folder; change if your package.json uses a different script (e.g., 'vite build')
+
+    - name: Setup Pages  # Only needed if deploying from 'dist'; skip if using 'gh-pages' branch directly
+      uses: actions/configure-pages@v5
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'dist'  # Path to your built static files
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
