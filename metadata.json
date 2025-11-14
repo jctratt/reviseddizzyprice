@@ -1,0 +1,5 @@
+{
+  "name": "DizzyPrice - NetHack Price ID",
+  "description": "A web-based tool to identify items in the game NetHack based on their shop prices. Ported from the original dizzyprice.py script.",
+  "requestFramePermissions": []
+}
