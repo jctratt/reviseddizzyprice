@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { ResultTable } from './UI';
 import type { Category, Settings, AnyItem, PricedItem } from '../types';
@@ -49,7 +48,7 @@ const CategoryColumn: React.FC<CategoryColumnProps> = ({ category, price, onPric
     });
 
     return { buy: buyMatches, sell: sellMatches };
-  }, [price, items, settings, category]);
+  }, [price, items, settings]);
 
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col">

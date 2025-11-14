@@ -1,8 +1,8 @@
-
 import React, { useState, useCallback } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import { SettingsPanel } from './components/UI';
 import CategoryColumn from './components/CategoryColumn';
+import UniversalSearch from './components/UniversalSearch';
 import type { Category, Settings } from './types';
 import { CATEGORIES } from './types';
 
@@ -39,6 +39,8 @@ function App() {
       <main>
         <SettingsPanel settings={settings} onSettingsChange={handleSettingsChange} />
         
+        <UniversalSearch settings={settings} />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {CATEGORIES.map(category => (
             <CategoryColumn
@@ -56,6 +58,7 @@ function App() {
         <p>Ported from the original dizzyprice.py by Aubrey Raech.</p>
         <p>Built with React, TypeScript, and Tailwind CSS.</p>
       </footer>
+
     </div>
   );
 }

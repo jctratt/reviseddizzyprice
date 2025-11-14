@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { Settings, PricedItem, AnyItem } from '../types';
 
@@ -92,14 +91,19 @@ export const ResultTable: React.FC<ResultTableProps> = ({ items, type }) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <tr key={`${getItemName(item)}-${index}`} className="border-b border-gray-700 hover:bg-gray-700/50">
+            {items.map((item, index) => {
+              const name = getItemName(item);
+              return (
+              <tr key={`${name}-${index}`} className="border-b border-gray-700 hover:bg-gray-700/50">
                 <td className="p-2">{item.baseCost}</td>
                 <td className="p-2">{item.calculatedPrices[0]}</td>
                 <td className="p-2">{item.calculatedPrices[1]}</td>
-                <td className="p-2 break-words">{getItemName(item)}</td>
+                <td className="p-2 break-words">
+                  <span>{name}</span>
+                </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
